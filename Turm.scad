@@ -104,7 +104,7 @@ module toroeffnung(torbreit, torhoch) {
     translate([0,-rundungdm,-torhoch + rundungdm]) {
       cube([4, rundungdm*2, torhoch-rundungdm]);
     }
-  } 
+  }
 }
 
 

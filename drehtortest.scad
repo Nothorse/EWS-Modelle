@@ -59,7 +59,7 @@ module drehtorangeln() {
     union() {
       move(x=-0.5, y=-.5) cube([3,2.5,1.5]);
       move(x=1.5) cylinder(1.5, r=2);
-      move(x=-0.5,y=-.5, z=torhoch-1.5) cube([3,2.5,1.5]);
+      move(x=-0.5,y=-.5, z=torhoch-1) cube([3,2.5,1.5]);
       move(x=1.5, z=torhoch-1.5) cylinder(1.5, r=2);
     }
     move(x=1.5, z=-5) cylinder(torhoch * 2, r=1);
