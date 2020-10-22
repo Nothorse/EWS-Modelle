@@ -5,18 +5,20 @@ seite = 18.5;
 tore = [4];
 durchgaenge = [];
 
-move (rx=-90, z=1)
+cylinder(d=1.2, 33);
+
+
+/* move (rx=-90, z=1)
 difference() {
 union() {
   solomauer();
   color("#00ff00") move(x=seite-3, y=-2.2) drehtorangeln();
 }
 move(x=18.5/2, y=-3) toroeffnung();
-}
+} */
 
 
-color("#ff0000") move(x=20, y=0, z=1, rx=-90) drehtor();
-
+//color("#ff0000") move(x=20, y=.5, z=2, rx=-90) drehtor();
 //move(x=seite+5, rx=90) einschub();
 
 module schiebetor() {
@@ -42,7 +44,14 @@ module drehtor() {
   $fn = 50;
   torbreit = seite-1;
   torhoch = torbreit*1.8;
-  cube([torbreit-3.5, 1, torhoch]);
+  intersection() {
+    union() {
+      cube([torbreit-3.5, 1, torhoch]);
+      move(rx=90) scale([torbreit / 512, (torhoch) / 512, 0.9/ 256])
+      surface(file = "holz.png", convexity = 3);
+    }
+    move(x=seite/2-1,y=-3) scale(v=[1.2,1.2,1]) toroeffnung();
+  }
   move(x=torbreit-3.5, z=1.5) cube([2,1,torhoch-3.2]);
   move(x=torbreit-1.5, y=-1, z=torhoch/2)
   difference() {
@@ -59,10 +68,10 @@ module drehtorangeln() {
     union() {
       move(x=-0.5, y=-.5) cube([3,2.5,1.5]);
       move(x=1.5) cylinder(1.5, r=2);
-      move(x=-0.5,y=-.5, z=torhoch-1) cube([3,2.5,1.5]);
-      move(x=1.5, z=torhoch-1.5) cylinder(1.5, r=2);
+      move(x=-0.5,y=-.5, z=torhoch-.6) cube([3,2.5,1.5]);
+      move(x=1.5, z=torhoch-.6) cylinder(1.5, r=2);
     }
-    move(x=1.5, z=-5) cylinder(torhoch * 2, r=1);
+    move(x=1.5, z=0.2) cylinder(torhoch * 2, r=1);
   }
 
 }
