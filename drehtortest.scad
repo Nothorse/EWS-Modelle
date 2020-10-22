@@ -4,21 +4,15 @@ radius = 18.5;
 seite = 18.5;
 tore = [4];
 durchgaenge = [];
+$fn=50;
 
-cylinder(d=1.2, 33);
-
-
-/* move (rx=-90, z=1)
-difference() {
+move(rx=-90, z=1, y=-1)
 union() {
-  solomauer();
-  color("#00ff00") move(x=seite-3, y=-2.2) drehtorangeln();
+  cylinder(d=1.3, 33);
+  cylinder(d=2, 1);
 }
-move(x=18.5/2, y=-3) toroeffnung();
-} */
 
-
-//color("#ff0000") move(x=20, y=.5, z=2, rx=-90) drehtor();
+move(x=5, y=.5, z=1, rx=-90) drehtor();
 //move(x=seite+5, rx=90) einschub();
 
 module schiebetor() {

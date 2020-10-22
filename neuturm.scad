@@ -5,7 +5,7 @@ use <MCAD/regular_shapes.scad>
 hoehe = 50;
 radius = 18.5;
 seite = 18.5;
-tore = [4];
+tore = [1];
 durchgaenge = [];
 
 // Berechnete größen
@@ -16,8 +16,8 @@ sideRad = seite * sqrt(3)/2;
 module move(x=0,y=0,z=0,rx=0,ry=0,rz=0)
 { translate([x,y,z])rotate([rx,ry,rz]) children(); }
 
-module wallmove(x=0, y=0, z=0, seite=0) {
-  rotate([0,0,seite*60]) translate([x,y,z]) children();
+module wallmove(x=0, y=0, z=0, richtung=0) {
+  rotate([0,0,richtung*60]) translate([x,y,z]) children();
 }
 
 function flatten(l) = [ for (a = l) for (b = a) b ] ;
@@ -35,7 +35,7 @@ module turm() {
       for (i = tore) {
         //wallmove(0, sideRad-.1, 0, i)
         //tor();
-        wallmove(x=-seite, i) #drehtorangeln();
+        wallmove(richtung=i) drehtorangeln();
       }
         mauerstruktur();
     }
@@ -178,15 +178,15 @@ module drehtorangeln() {
   $fn = 50;
   torbreit = seite-1;
   torhoch = torbreit*1.8;
-  move(rz=0) {
+  move(x=-seite/2+1.5,y=sideRad+2,rz=0) {
     difference() {
       union() {
-        move(x=-0.5, y=-.5) cube([3,2.5,1.5]);
-        move(x=1.5) cylinder(1.5, r=2);
-        move(x=-0.5,y=-.5, z=torhoch-.6) cube([3,2.5,1.5]);
-        move(x=1.5, z=torhoch-.6) cylinder(1.5, r=2);
+        move(x=-2,y=-2.5) cube([3,2.5,1.5]);
+        move(x=0) cylinder(1.5, r=2);
+        move(x=-2,y=-2.5, z=torhoch-.6) cube([3,2.5,1.5]);
+        move(x=0, z=torhoch-.6) cylinder(1.5, r=2);
       }
-      move(x=1.5, z=0.2) cylinder(torhoch * 2, r=1);
+      move(x=0, z=0.2) cylinder(torhoch * 2, r=1);
     }
   }
 
