@@ -22,7 +22,7 @@ module wallmove(x=0, y=0, z=0, seite=0) {
 
 function flatten(l) = [ for (a = l) for (b = a) b ] ;
 
-
+turm();
 /* move(30,sideRad+10,1, 0, 0, 0) zinnenkranz();
 turm(); */
 
@@ -33,8 +33,9 @@ module turm() {
       hexagon_tube(hoehe, radius, 1);
       hexagon_prism(2,radius);
       for (i = tore) {
-        wallmove(0, sideRad-.1, 0, i)
-        tor();
+        //wallmove(0, sideRad-.1, 0, i)
+        //tor();
+        wallmove(x=-seite, i) #drehtorangeln();
       }
         mauerstruktur();
     }
@@ -43,10 +44,10 @@ module turm() {
        toroeffnung();
     }
     for (i = [1:6]) {
-      wallmove(0, sideRad-2, 10, i)
+      wallmove(0, sideRad-2, 7, i)
        fenster();
     }
-    move(0,0,1) cylinder_tube(5, sideRad-2, radius);
+    //move(0,0,1) cylinder_tube(5, sideRad-2, radius);
   }
 }
 
@@ -151,4 +152,42 @@ module zinnen() {
       }
     }
   }
+}
+
+module drehtor() {
+  $fn = 50;
+  torbreit = seite-1;
+  torhoch = torbreit*1.8;
+  intersection() {
+    union() {
+      cube([torbreit-3.5, 1, torhoch]);
+      move(rx=90) scale([torbreit / 512, (torhoch) / 512, 0.9/ 256])
+      surface(file = "holz.png", convexity = 3);
+    }
+    move(x=seite/2-1,y=-3) scale(v=[1.2,1.2,1]) toroeffnung();
+  }
+  move(x=torbreit-3.5, z=1.5) cube([2,1,torhoch-3.2]);
+  move(x=torbreit-1.5, y=-1, z=torhoch/2)
+  difference() {
+  cylinder(torhoch-3.2, r=2, center=true);
+  cylinder(torhoch*2, r=.9, center = true);
+  }
+}
+
+module drehtorangeln() {
+  $fn = 50;
+  torbreit = seite-1;
+  torhoch = torbreit*1.8;
+  move(rz=0) {
+    difference() {
+      union() {
+        move(x=-0.5, y=-.5) cube([3,2.5,1.5]);
+        move(x=1.5) cylinder(1.5, r=2);
+        move(x=-0.5,y=-.5, z=torhoch-.6) cube([3,2.5,1.5]);
+        move(x=1.5, z=torhoch-.6) cylinder(1.5, r=2);
+      }
+      move(x=1.5, z=0.2) cylinder(torhoch * 2, r=1);
+    }
+  }
+
 }
