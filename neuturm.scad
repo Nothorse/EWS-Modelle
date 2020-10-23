@@ -5,8 +5,8 @@ use <MCAD/regular_shapes.scad>
 hoehe = 50;
 radius = 18.5;
 seite = 18.5;
-tore = [1];
-durchgaenge = [];
+tore = [];
+durchgaenge = [3,4];
 
 // Berechnete größen
 
@@ -22,7 +22,7 @@ module wallmove(x=0, y=0, z=0, richtung=0) {
 
 function flatten(l) = [ for (a = l) for (b = a) b ] ;
 
-turm();
+zinnenkranz();
 /* move(30,sideRad+10,1, 0, 0, 0) zinnenkranz();
 turm(); */
 
@@ -56,7 +56,7 @@ move(0, 0, -1)
   difference() {
     union() {
     difference() {
-      translate([0,0,0]) hexagon_tube(7,radius +3.5,2);
+      translate([0,0,0]) hexagon_tube(12,radius +3.5,2);
         zinnen();
     }
     move(0,0,3) hexagon_prism(1, radius +1.5);
@@ -138,17 +138,35 @@ module solomauer() {
 
 
 module zinnen() {
-  zinB = seite/6;
+  zinB = seite/8;
   zinVers = seite/6 * 1.8;
   echo(zinB);
   for (i = [1:6]) {
     rotate([0,0,i*60]) {
       color("Blue") {
         translate([0, sideRad, 7]) {
-          translate([-zinVers,0,0]) cube([zinB,7,5], center= true);
-          translate([0,0,0]) cube([zinB,7,5], center= true);
-          translate([zinVers,0,0]) cube([zinB,7,5], center= true);
+          translate([-zinVers,0,5]) cube([zinB,7,12], center= true);
+          translate([0,0,5]) cube([zinB,7,12], center= true);
+          translate([zinVers,0,5]) cube([zinB,7,12], center= true);
+          move(x=0.5,y=4) schwalbenschwanz();
+          move(x=zinVers+.5,y=4) schwalbenschwanz();
+          move(x=-zinVers+.5,y=4) schwalbenschwanz();
+          move(x=-(zinVers)*2,y=4) schwalbenschwanz();
         }
+      }
+    }
+  }
+}
+
+module schwalbenschwanz() {
+  $fn=50;
+  move(z=3,rx=90)
+  linear_extrude(4) {
+    difference() {
+      move(x=0) square(4.5);
+      union() {
+        move() circle(d=4);
+        move(x=4.5) circle(d=4);
       }
     }
   }
@@ -197,5 +215,9 @@ module drehtorangeln() {
       move(x=0, z=-4) cylinder(torhoch * 2, r=1);
     }
   }
+}
 
+module bergfried() {
+  turm();
+  move(0,0,-2.5) hexagon_prism(3, radius -1.2);
 }
