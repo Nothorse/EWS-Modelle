@@ -8,7 +8,7 @@ $fn=50;
 
 move(rx=-90, z=1, y=-1)
 union() {
-  cylinder(d=1.3, 33);
+  cylinder(d=1.2, 33);
   cylinder(d=2, 1);
 }
 
@@ -40,9 +40,17 @@ module drehtor() {
   torhoch = torbreit*1.8;
   intersection() {
     union() {
-      cube([torbreit-3.5, 1, torhoch]);
-      move(rx=90) scale([torbreit / 512, (torhoch) / 512, 0.9/ 256])
-      surface(file = "holz.png", convexity = 3);
+      difference() {
+        cube([torbreit-3.5, 1, torhoch]);
+        for(rille = [1:5]) {
+          move(x=rille*2.5,y=-.8) cube([.2,1,torhoch]);
+        }
+      }
+      for(querbrett = [torhoch/3, (torhoch/3)*2]) {
+        move(z=querbrett, y=-.3) cube([torbreit, 1, 2]);
+        for (nagel = [1:6])
+        move(z=querbrett+1, y=-.3, x=(nagel*2)+1) sphere(d=1);
+      }
     }
     move(x=seite/2-1,y=-3) scale(v=[1.2,1.2,1]) toroeffnung();
   }
