@@ -34,6 +34,8 @@ zinnen_durchgaenge = [];
 /* [Dekoration] */
 // Mauerstruktur
 mauerwerk = true;
+// Strukturauswahl
+mauer_map = "mauer1.png"; //  ["mauer1.png":"Grob", "mauer2.png":"Mittel", "mauer3.png":"Fein"]
 // Schwalbenschwanzzinnen
 sw_zinnen = true;
 
@@ -161,7 +163,7 @@ module _fenster() {
 
 module mauerstruktur() {
   scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
-  surface(file = "mauer2.png", convexity = 3);
+  surface(file = mauer_map, convexity = 3);
 }
 
 
