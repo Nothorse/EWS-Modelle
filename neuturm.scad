@@ -49,7 +49,7 @@ move(x=sideRad*3,y=sideRad*3, z=2) bergfried();
 
 if (tor_zeigen) {
 move(x=-sideRad*3,z=1, rx=-90)  drehtor();
-move(x=-(sideRad*2)+4) #drehtordorn();
+move(x=-(sideRad*2)+4) drehtordorn();
 }
 
 module turm() {
