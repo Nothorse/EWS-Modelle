@@ -1,29 +1,41 @@
 use <MCAD/regular_shapes.scad>
+/**
+ * Gebäude für EWS
+ * TH (T!osh) <th@grendel.at>
+ * remix allowed
+ */
 
-// Setup
+// Setup für Customizer
+/* [Maße] */
 // Höhe in mm
 hoehe = 50;
 // Seitenbreite
 seite = 18.5;
+/* [Gebäudeauswahl] */
+// Turm
+turm_zeigen = true;
+// Bergfried oberer Turmteil
+bergfried_zeigen = true;
+// Tor mit Dorn
+tor_zeigen = true;
+// Zinnenkranz
+zinnen_zeigen = true;
+// Einzelmauer
+Mauer_zeigen = true;
+/* [Tore und Durchgänge] */
 // Tore für Turm (Erdgeschoss BF) (Windrichtungen) z.B. [1]
 tore = [];
 // Durchgänge im Erdgeschoß (Windrichtungen)
 durchgaenge = [];
 // Durchgänge im Obergeschoß eines Bergfrieds (Windrichtungen)  z.B. [3,5]
 bf_durchgaenge = [];
-// Bei Zinnenkranz ausgeparte Seiten z.B. [3,5]
+// Bei Zinnenkranz ausgesparte Seiten z.B. [3,5]
 zinnen_durchgaenge = [];
-// Zinnenkranz drucken
-zinnen_zeigen = true;
-// Turm anzeigen
-turm_zeigen = true;
-// Bergfried oberen Turmteil anzeigen
-bergfried_zeigen = true;
-// Tor anzeigen
-tor_zeigen = true;
-// Einzelmauer anzeigen
-Mauer_zeigen = true;
-
+/* [Dekoration] */
+// Mauerstruktur
+mauerwerk = true;
+// Schwalbenschwanzzinnen
+sw_zinnen = true;
 
 
 // Berechnete größen
@@ -41,15 +53,15 @@ module wallmove(x=0, y=0, z=0, richtung=0) {
 function flatten(l) = [ for (a = l) for (b = a) b ];
 
 if (zinnen_zeigen) {
-  move(z=1) zinnenkranz(zinnen_durchgaenge);
+  move(z=1) zinnenkranz(zinnen_durchgaenge, sw_zinnen);
 }
 
 if (turm_zeigen) {
-  move(x=sideRad*3) turm(tore, durchgaenge);
+  move(x=sideRad*3) turm(tore, durchgaenge, mauerwerk);
 }
 
 if (bergfried_zeigen) {
-  move(x=sideRad*3,y=sideRad*3, z=2) bergfried(bf_durchgaenge);
+  move(x=sideRad*3,y=sideRad*3, z=2) bergfried(bf_durchgaenge, mauerwerk);
 }
 
 if (tor_zeigen) {
@@ -58,10 +70,10 @@ if (tor_zeigen) {
 }
 
 if (Mauer_zeigen) {
-  move(y=sideRad*2) solomauer();
+  move(y=sideRad*3) solomauer(mauerwerk);
 }
 
-module turm(turmtore, turmdurchgaenge) {
+module turm(turmtore, turmdurchgaenge, struktur) {
   difference() {
     // turmkörper
     union() {
@@ -72,7 +84,14 @@ module turm(turmtore, turmdurchgaenge) {
         //tor();
         wallmove(richtung=i,y=.4, x=.5) drehtorangeln();
       }
-        mauerstruktur();
+      if (struktur) {
+        for (i = [1:6]) {
+          move(rz=i*60)
+          move(x=-sideRad/2-.5,y=-sideRad+0.1, rx=90) {
+            mauerstruktur();
+          }
+        }
+      }
     }
     for (i = flatten([turmdurchgaenge, turmtore])) {
       wallmove(0, sideRad-2, 1, i)
@@ -80,37 +99,25 @@ module turm(turmtore, turmdurchgaenge) {
     }
     for (i = [1:6]) {
       wallmove(0, sideRad-2, 7, i)
-       fenster();
+       _fenster();
     }
     //move(0,0,1) cylinder_tube(5, sideRad-2, seite);
   }
 }
 
-module zinnenkranz(durchbrueche) {
+module zinnenkranz(durchbrueche, schwalb) {
 move(0, 0, -1)
   difference() {
     union() {
     difference() {
       translate([0,0,0]) hexagon_tube(12,seite +3.5,2);
-        zinnen();
+        zinnen(schwalb);
     }
     move(0,0,3) hexagon_prism(1, seite +1.5);
     move(0,0,0) hexagon_prism(3, seite -1.2);
     }
     for(i = durchbrueche) {
     rotate([0,0,i*60]) translate([0, sideRad+2.2, 4]) cube([seite*2,4,seite +1.5], center = true);
-    }
-  }
-}
-
-module tor() {
-  torbreit = seite;
-  torhoch = torbreit*1.8;
-  color("Green") {
-    move(0,0, torhoch/2) cube([torbreit, 1.2, torhoch], center = true);
-    move(0,1, torhoch/2) difference() {
-      cube([torbreit, 1.5, torhoch], center=true);
-      move(0,0,2) cube([torbreit-3, 1, torhoch + 3], center=true);
     }
   }
 }
@@ -133,7 +140,7 @@ module _toroeffnung() {
   }
 }
 
-module fenster() {
+module _fenster() {
   $fn = 8;
   fensterbreit = seite/5;
   fensterhoch = hoehe;
@@ -153,35 +160,31 @@ module fenster() {
 }
 
 module mauerstruktur() {
-  for (i = [1:6]) {
-    move(rz=i*60)
-    move(x=-sideRad/2-.5,y=-sideRad+0.1, rx=90) {
-        scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
-        surface(file = "mauer2.png", convexity = 3);
-    }
-  }
+  scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
+  surface(file = "mauer2.png", convexity = 3);
 }
 
 
-module solomauer() {
+module solomauer(struktur) {
   intersection() {
     difference() {
       union() {
         cube([seite, 1, hoehe]);
-        move(x=0,y=0, rx=90) {
-          scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
-          surface(file = "mauer2.png", convexity = 3);
+        if (struktur) {
+          move(x=0,y=0, rx=90) {
+            mauerstruktur();
+          }
         }
         cube([seite, sideRad-5, 2]);
       }
-      move(z=7, x=seite/2) fenster();
+      move(z=7, x=seite/2) _fenster();
     }
     move(y=4, x=seite/2) triangle_prism(hoehe+10,seite/3*2);
   }
 }
 
 
-module zinnen() {
+module zinnen(schwalb) {
   zinB = seite/8;
   zinVers = seite/6 * 1.8;
   echo(zinB);
@@ -192,10 +195,12 @@ module zinnen() {
           translate([-zinVers,0,5]) cube([zinB,7,12], center= true);
           translate([0,0,5]) cube([zinB,7,12], center= true);
           translate([zinVers,0,5]) cube([zinB,7,12], center= true);
-          move(x=0.5,y=4) schwalbenschwanz();
-          move(x=zinVers+.5,y=4) schwalbenschwanz();
-          move(x=-zinVers+.5,y=4) schwalbenschwanz();
-          move(x=-(zinVers)*2,y=4) schwalbenschwanz();
+          if (schwalb) {
+            move(x=0.5,y=4) schwalbenschwanz();
+            move(x=zinVers+.5,y=4) schwalbenschwanz();
+            move(x=-zinVers+.5,y=4) schwalbenschwanz();
+            move(x=-(zinVers)*2,y=4) schwalbenschwanz();
+          }
         }
       }
     }
@@ -269,7 +274,7 @@ module drehtordorn() {
   }
 }
 
-module bergfried(durchgaenge) {
-  turm([], durchgaenge);
+module bergfried(durchgaenge, struktur) {
+  turm([], durchgaenge, struktur);
   move(0,0,-2.5) hexagon_prism(3, seite -1.2);
 }
