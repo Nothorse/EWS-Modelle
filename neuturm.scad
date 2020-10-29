@@ -1,12 +1,25 @@
 use <MCAD/regular_shapes.scad>
 
 // Setup
-// höhe, seite, array durchgänge, array tore
+// Höhe in mm
 hoehe = 50;
-radius = 18.5;
+// Seitenbreite
 seite = 18.5;
+// Tore (Windrichtungen)
 tore = [];
+// Durchgänge (Windrichtungen)
+// (Bei Zinnenkranz ausgeparte Seiten)
 durchgaenge = [3,4];
+// Zinnenkranz drucken
+zinnen_zeigen = true;
+// Turm anzeigen
+turm_zeigen = true;
+// Bergfried oberen Turmteil anzeigen
+bergfried_zeigen = true;
+// Tor anzeigen
+tor_zeigen = true;
+
+
 
 // Berechnete größen
 
@@ -22,16 +35,29 @@ module wallmove(x=0, y=0, z=0, richtung=0) {
 
 function flatten(l) = [ for (a = l) for (b = a) b ] ;
 
-zinnenkranz();
-/* move(30,sideRad+10,1, 0, 0, 0) zinnenkranz();
-turm(); */
+if (zinnen_zeigen) {
+move(z=1) zinnenkranz();
+}
+
+if (turm_zeigen) {
+move(x=sideRad*3) turm();
+}
+
+if (bergfried_zeigen) {
+move(x=sideRad*3,y=sideRad*3, z=2) bergfried();
+}
+
+if (tor_zeigen) {
+move(x=-sideRad*3,z=1, rx=-90)  drehtor();
+move(x=-(sideRad*2)+4) #drehtordorn();
+}
 
 module turm() {
   difference() {
     // turmkörper
     union() {
-      hexagon_tube(hoehe, radius, 1);
-      hexagon_prism(2,radius);
+      hexagon_tube(hoehe, seite, 1);
+      hexagon_prism(2,seite);
       for (i = tore) {
         //wallmove(0, sideRad-.1, 0, i)
         //tor();
@@ -47,7 +73,7 @@ module turm() {
       wallmove(0, sideRad-2, 7, i)
        fenster();
     }
-    //move(0,0,1) cylinder_tube(5, sideRad-2, radius);
+    //move(0,0,1) cylinder_tube(5, sideRad-2, seite);
   }
 }
 
@@ -56,14 +82,14 @@ move(0, 0, -1)
   difference() {
     union() {
     difference() {
-      translate([0,0,0]) hexagon_tube(12,radius +3.5,2);
+      translate([0,0,0]) hexagon_tube(12,seite +3.5,2);
         zinnen();
     }
-    move(0,0,3) hexagon_prism(1, radius +1.5);
-    move(0,0,0) hexagon_prism(3, radius -1.2);
+    move(0,0,3) hexagon_prism(1, seite +1.5);
+    move(0,0,0) hexagon_prism(3, seite -1.2);
     }
     for(i = durchgaenge) {
-    rotate([0,0,i*60]) translate([0, sideRad+2.2, 4]) cube([radius*2,4,radius +1.5], center = true);
+    rotate([0,0,i*60]) translate([0, sideRad+2.2, 4]) cube([seite*2,4,seite +1.5], center = true);
     }
   }
 }
@@ -121,7 +147,7 @@ module mauerstruktur() {
   for (i = [1:6]) {
     move(rz=i*60)
     move(x=-sideRad/2-.5,y=-sideRad+0.1, rx=90) {
-        scale([radius / 72, (hoehe-2) / 108, 0.9/ 256])
+        scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
         surface(file = "mauer2.png", convexity = 3);
     }
   }
@@ -131,7 +157,7 @@ module mauerstruktur() {
 module solomauer() {
   cube([seite, 1, hoehe]);
   move(x=0,y=0, rx=90) {
-    scale([radius / 72, (hoehe-2) / 108, 0.9/ 256])
+    scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
     surface(file = "mauer2.png", convexity = 3);
   }
 }
@@ -217,7 +243,15 @@ module drehtorangeln() {
   }
 }
 
+module drehtordorn() {
+  move(rx=-90, z=1, y=-1)
+  union() {
+    cylinder(d=1.2, 33);
+    cylinder(d=2, 1);
+  }
+}
+
 module bergfried() {
   turm();
-  move(0,0,-2.5) hexagon_prism(3, radius -1.2);
+  move(0,0,-2.5) hexagon_prism(3, seite -1.2);
 }
