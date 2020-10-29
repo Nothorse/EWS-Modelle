@@ -2,7 +2,7 @@ use <MCAD/regular_shapes.scad>
 /**
  * Gebäude für EWS
  * TH (T!osh) <th@grendel.at>
- * remix allowed
+ * remix erwünscht
  */
 
 // Setup für Customizer

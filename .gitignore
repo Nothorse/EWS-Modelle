@@ -2,3 +2,4 @@
 #ignore gcode and binary files
 *.gcode
 *.3mf
+*.stl
