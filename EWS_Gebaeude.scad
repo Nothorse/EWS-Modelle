@@ -113,7 +113,7 @@ move(0, 0, -1)
     union() {
     difference() {
       translate([0,0,0]) hexagon_tube(12,seite +3.5,2);
-        zinnen(schwalb);
+      zinnen(schwalb);
     }
     move(0,0,3) hexagon_prism(1, seite +1.5);
     move(0,0,0) hexagon_prism(3, seite -1.2);
@@ -180,6 +180,7 @@ module solomauer(struktur) {
         cube([seite, sideRad-5, 2]);
       }
       move(z=7, x=seite/2) _fenster();
+      move(x=-1,y=-2, z=hoehe-3.6) cube([seite+5, 4, 4]);
     }
     move(y=4, x=seite/2) triangle_prism(hoehe+10,seite/3*2);
   }
