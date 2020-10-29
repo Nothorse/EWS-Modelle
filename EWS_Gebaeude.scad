@@ -35,7 +35,7 @@ zinnen_durchgaenge = [];
 // Mauerstruktur
 mauerwerk = true;
 // Strukturauswahl
-mauer_map = "mauer1.png"; //  ["mauer1.png":"Grob", "mauer2.png":"Mittel", "mauer3.png":"Fein"]
+mauer_map = "mauer2.png"; //  ["mauer1.png":"Grob", "mauer2.png":"Mittel", "mauer3.png":"Fein"]
 // Schwalbenschwanzzinnen
 sw_zinnen = true;
 
