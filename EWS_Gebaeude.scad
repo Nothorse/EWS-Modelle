@@ -173,7 +173,7 @@ module solomauer(struktur) {
       union() {
         cube([seite, 1, hoehe]);
         if (struktur) {
-          move(x=0,y=0, rx=90) {
+          move(x=0,y=-0.1, rx=90) {
             mauerstruktur();
           }
         }
@@ -183,6 +183,7 @@ module solomauer(struktur) {
     }
     move(y=4, x=seite/2) triangle_prism(hoehe+10,seite/3*2);
   }
+  move(y=-1, x=1) cube([seite-2,1,1]);
 }
 
 
