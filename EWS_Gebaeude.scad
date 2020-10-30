@@ -3,6 +3,7 @@ use <MCAD/regular_shapes.scad>
  * Gebäude für EWS
  * TH (T!osh) <th@grendel.at>
  * remix erwünscht
+ * module mit _name sind privat
  */
 
 // Setup für Customizer
@@ -84,13 +85,13 @@ module turm(turmtore, turmdurchgaenge, struktur) {
       for (i = turmtore) {
         //wallmove(0, sideRad-.1, 0, i)
         //tor();
-        wallmove(richtung=i,y=.4, x=.5) drehtorangeln();
+        wallmove(richtung=i,y=.4, x=.5) _drehtorangeln();
       }
       if (struktur) {
         for (i = [1:6]) {
           move(rz=i*60)
           move(x=-sideRad/2-.5,y=-sideRad+0.1, rx=90) {
-            mauerstruktur();
+            _mauerstruktur();
           }
         }
       }
@@ -108,18 +109,19 @@ module turm(turmtore, turmdurchgaenge, struktur) {
 }
 
 module zinnenkranz(durchbrueche, schwalb) {
-move(0, 0, -1)
-  difference() {
-    union() {
+  move(0, 0, -1) {
     difference() {
-      translate([0,0,0]) hexagon_tube(12,seite +3.5,2);
-      zinnen(schwalb);
-    }
-    move(0,0,3) hexagon_prism(1, seite +1.5);
-    move(0,0,0) hexagon_prism(3, seite -1.2);
-    }
-    for(i = durchbrueche) {
-    rotate([0,0,i*60]) translate([0, sideRad+2.2, 4]) cube([seite*2,4,seite +1.5], center = true);
+      union() {
+      difference() {
+        translate([0,0,0]) hexagon_tube(12,seite +3.5,2);
+        _zinnen(schwalb);
+      }
+      move(0,0,3) hexagon_prism(1, seite +1.5);
+      move(0,0,0) hexagon_prism(3, seite -1.2);
+      }
+      for(i = durchbrueche) {
+        rotate([0,0,i*60]) translate([0, sideRad+2.2, 4]) cube([seite*2,4,seite +1.5], center = true);
+      }
     }
   }
 }
@@ -161,7 +163,7 @@ module _fenster() {
 
 }
 
-module mauerstruktur() {
+module _mauerstruktur() {
   scale([seite / 72, (hoehe-2) / 108, 0.9/ 256])
   surface(file = mauer_map, convexity = 3);
 }
@@ -174,7 +176,7 @@ module solomauer(struktur) {
         cube([seite, 1, hoehe]);
         if (struktur) {
           move(x=0,y=-0.1, rx=90) {
-            mauerstruktur();
+            _mauerstruktur();
           }
         }
         cube([seite, sideRad-5, 2]);
@@ -188,7 +190,7 @@ module solomauer(struktur) {
 }
 
 
-module zinnen(schwalb) {
+module _zinnen(schwalb) {
   zinB = seite/8;
   zinVers = seite/6 * 1.8;
   echo(zinB);
@@ -200,10 +202,10 @@ module zinnen(schwalb) {
           translate([0,0,5]) cube([zinB,7,12], center= true);
           translate([zinVers,0,5]) cube([zinB,7,12], center= true);
           if (schwalb) {
-            move(x=0.5,y=4) schwalbenschwanz();
-            move(x=zinVers+.5,y=4) schwalbenschwanz();
-            move(x=-zinVers+.5,y=4) schwalbenschwanz();
-            move(x=-(zinVers)*2,y=4) schwalbenschwanz();
+            move(x=0.5,y=4) _schwalbenschwanz();
+            move(x=zinVers+.5,y=4) _schwalbenschwanz();
+            move(x=-zinVers+.5,y=4) _schwalbenschwanz();
+            move(x=-(zinVers)*2,y=4) _schwalbenschwanz();
           }
         }
       }
@@ -211,7 +213,7 @@ module zinnen(schwalb) {
   }
 }
 
-module schwalbenschwanz() {
+module _schwalbenschwanz() {
   $fn=50;
   move(z=3,rx=90)
   linear_extrude(4) {
@@ -253,7 +255,7 @@ module drehtor() {
   }
 }
 
-module drehtorangeln() {
+module _drehtorangeln() {
   $fn = 50;
   torbreit = seite-1;
   torhoch = torbreit*1.8;
