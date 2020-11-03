@@ -1,5 +1,6 @@
 use <MCAD/regular_shapes.scad>
 use <lib/math.scad>
+use <lib/transforms.scad>
 /**
  * Gebäude für EWS
  * TH (T!osh) <th@grendel.at>
@@ -43,12 +44,11 @@ gesimse = 0; // [0:Kein Gesims,1:Rechtwinklig,2:Faschen]
 // Zinnenform
 zinnentyp = 1; // [1:Rechteck, 2:Schwalbenschwanz, 3:Bogen]
 // Fenstertyp
-fenster = "1"; // [1:"schmal", 2:"doppelbogen"]
+fenster = 1; // [1:"schmal", 2:"doppelbogen"]
 // Tortyp
-tortyp = "1"; // [1:"Drehangel", 2:"Offen"]
+tortyp = 1; // [1:"Drehangel", 2:"Offen"]
 // Torform
-torform = "1"; // [1:"8eck oben", 2:"Spitzbogen"]
-
+torform = 1; // [1:"8eck oben", 2:"Spitzbogen"]
 
 // Berechnete größen
 
@@ -74,7 +74,7 @@ if (zinnen_zeigen) {
 }
 
 if (turm_zeigen) {
-  move(x=sideRad*3) turm(tore, durchgaenge, mauerwerk, fenster);
+  move(x=sideRad*3) turm(tore, durchgaenge, mauerwerk, fenster, torform);
 }
 
 if (bergfried_zeigen) {
@@ -90,7 +90,7 @@ if (Mauer_zeigen) {
   move(y=sideRad*3) solomauer(mauerwerk);
 }
 
-module turm(turmtore, turmdurchgaenge, struktur, fenster) {
+module turm(turmtore, turmdurchgaenge, struktur, fenster, torform) {
   alle_durch =  flatten([turmdurchgaenge, turmtore]);
   difference() {
     // turmkörper
@@ -100,7 +100,7 @@ module turm(turmtore, turmdurchgaenge, struktur, fenster) {
       for (i = turmtore) {
         //wallmove(0, sideRad-.1, 0, i)
         //tor();
-        if (tortyp == "1") {
+        if (tortyp == 1) {
           wallmove(richtung=i,y=.4, x=.5) _drehtorangeln();
         }
       }
@@ -129,8 +129,8 @@ module turm(turmtore, turmdurchgaenge, struktur, fenster) {
           cube ([seite,.7,hoehe/3],center=true);
         }
         for (i = alle_durch) {
-          wallmove(0, sideRad, 1, i)
-          scale([1.1,.1,1.04]) _toroeffnung();
+          wallmove(0, sideRad+.5, 1, i)
+            move(x=-.4 ,z=18,rx=90) linear_extrude(1) shell2d(1) _toroeffnung2d(torform, "fa");
         }
       }
     }
@@ -165,16 +165,15 @@ module zinnenkranz(durchbrueche, typ) {
 }
 
 module _toroeffnung() {
-  if (torform == "1") {
+  if (torform == 1) {
     _torachteck();
   }
-  if (torform == "2") {
+  if (torform == 2) {
     _spitzbogen();
   }
 }
 
 module _torachteck() {
-  $fn = 8;
   torbreit = seite - seite/5;
   torhoch = hoehe/3 - (hoehe/30);
   rundungdm = torbreit/2 -torbreit/10;
@@ -183,8 +182,7 @@ module _torachteck() {
     union() {
       rotate([90,0,0]) {
         linear_extrude(6) {
-          circle(rundungdm);
-          move(0, -rundungdm*2) square([rundungdm*1.8, (rundungdm*4)-3], center=true);
+          _toroeffnung2d(1, "auf");
         }
       }
     }
@@ -192,31 +190,46 @@ module _torachteck() {
 }
 
 module _spitzbogen() {
-  $fn=20;
-  torbreit = seite - seite/3;
   torhoch = hoehe/3 - (hoehe/30);
   translate([-.5,5,torhoch+3]) {
     union() {
       rotate([90,0,0]) {
         linear_extrude(6) {
-          difference() {
-            move(y=-4) ellipse(torbreit, torbreit*2);
-            move(y=-torhoch-3) square(size=[torbreit, 5], center=true);
-          }
-          move(y=-10) square(size=[torbreit, torbreit], center=true);
+          _toroeffnung2d(2, "auf");
         }
       }
     }
   }
+}
 
+module _toroeffnung2d(type, woher) {
+  echo("fasche1", woher, type);
+  if (type == 1) {
+    $fn = 8;
+    torbreit = seite - seite/5;
+    rundungdm = torbreit/2 -torbreit/10;
+    move(y=-1)rotate([0,0,135]) circle(rundungdm-1);
+    move(0, -rundungdm*2) square([rundungdm*1.8, (rundungdm*4)-3], center=true);
+  }
+  if (type == 2) {
+    $fn=20;
+    echo("fasche2", woher);
+    torbreit = seite - seite/3;
+    torhoch = hoehe/3 - (hoehe/30);
+    difference() {
+      move(y=-4) ellipse(torbreit, torbreit*2);
+      move(y=-torhoch-3) square(size=[torbreit, 5], center=true);
+    }
+    move(y=-10) square(size=[torbreit, torbreit], center=true);
+  }
 }
 
 module _fenster(fenstertyp) {
   echo(fenstertyp);
-  if (fenstertyp == "1") {
+  if (fenstertyp == 1) {
     _schmalfenster();
   }
-  if (fenstertyp == "2") {
+  if (fenstertyp == 2) {
     _doppelfenster();
   }
 
@@ -321,7 +334,7 @@ module _zinnen(typ) {
 }
 
 module _schwalbenschwanz() {
-  $fn=50;
+  $fn=20;
   move(z=3,rx=90)
   linear_extrude(4) {
     difference() {
@@ -340,13 +353,13 @@ module tor(tortyp) {
   torhoch = torbreit*1.8;
   intersection() {
     _torkorpus(torbreit, torhoch);
-    if (tortyp == "1") {
+    if (tortyp == 1) {
       move(x=seite/2-1,y=-3) scale(v=[1.2,1.2,1.2]) _toroeffnung();
     } else {
       move(x=seite/2-1,y=-3) scale(v=[0.9,1,0.9]) _toroeffnung();
     }
   }
-  if (tortyp == "1") {
+  if (tortyp == 1) {
     move(x=torbreit-3.5, z=1.5) cube([2,1,torhoch-3.2]);
     move(x=torbreit-1.5, y=-1, z=torhoch/2)
     difference() {
@@ -375,7 +388,7 @@ module _torkorpus(torbreit, torhoch) {
 }
 
 module _drehtorangeln() {
-  $fn = 50;
+  $fn = 30;
   torbreit = seite-1;
   torhoch = torbreit*1.8;
   move(x=-seite/2+1.5,y=sideRad+2,rz=0) {
