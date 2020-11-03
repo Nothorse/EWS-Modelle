@@ -82,8 +82,8 @@ if (bergfried_zeigen) {
 }
 
 if (tor_zeigen) {
-  move(x=-sideRad*3,z=1, rx=-90)  drehtor();
-  move(x=-(sideRad*2)+4) drehtordorn();
+  move(x=-sideRad*3,z=1, rx=-90)  tor(tortyp);
+  if (tortyp == "1") move(x=-(sideRad*2)+4) drehtordorn();
 }
 
 if (Mauer_zeigen) {
@@ -125,8 +125,12 @@ module turm(turmtore, turmdurchgaenge, struktur, fenster) {
           move(x=-seite/2,y=sideRad)
           cube ([1,.5,hoehe-3]);
           move(rz=i*60)
-          move(x=0,y=sideRad+.2, z=(hoehe*2/3 + hoehe/6)-3)
-          cube ([seite,.5,hoehe/3],center=true);
+          move(x=0,y=sideRad+.15, z=(hoehe*2/3 + hoehe/6)-3)
+          cube ([seite,.7,hoehe/3],center=true);
+        }
+        for (i = alle_durch) {
+          wallmove(0, sideRad, 1, i)
+          scale([1.1,.1,1.04]) _toroeffnung();
         }
       }
     }
@@ -330,31 +334,43 @@ module _schwalbenschwanz() {
   }
 }
 
-module drehtor() {
-  $fn = 50;
+module tor(tortyp) {
+  $fn = 20;
   torbreit = seite-1;
   torhoch = torbreit*1.8;
   intersection() {
-    union() {
-      difference() {
-        cube([torbreit-3.5, 1, torhoch]);
-        for(rille = [1:5]) {
-          move(x=rille*2.5,y=-.8) cube([.2,1,torhoch]);
-        }
-      }
-      for(querbrett = [torhoch/3, (torhoch/3)*2]) {
-        move(z=querbrett, y=-.3) cube([torbreit, 1, 2]);
-        for (nagel = [1:6])
-        move(z=querbrett+1, y=-.3, x=(nagel*2)+1) sphere(d=1);
+    _torkorpus(torbreit, torhoch);
+    if (tortyp == "1") {
+      move(x=seite/2-1,y=-3) scale(v=[1.2,1.2,1.2]) _toroeffnung();
+    } else {
+      move(x=seite/2-1,y=-3) scale(v=[0.9,1,0.9]) _toroeffnung();
+    }
+  }
+  if (tortyp == "1") {
+    move(x=torbreit-3.5, z=1.5) cube([2,1,torhoch-3.2]);
+    move(x=torbreit-1.5, y=-1, z=torhoch/2)
+    difference() {
+    cylinder(torhoch-3.2, r=2, center=true);
+    cylinder(torhoch*2, r=.9, center = true);
+    }
+  } else {
+    move(x=-.5,rx=90,y=2, z=2) cube([torbreit-1, torhoch-5, 1]);
+  }
+}
+
+module _torkorpus(torbreit, torhoch) {
+  union() {
+    difference() {
+      cube([torbreit, 1, torhoch]);
+      for(rille = [1:5]) {
+        move(x=rille*2.5,y=-.8) cube([.2,1,torhoch]);
       }
     }
-    move(x=seite/2-1,y=-3) scale(v=[1.2,1.2,1]) _toroeffnung();
-  }
-  move(x=torbreit-3.5, z=1.5) cube([2,1,torhoch-3.2]);
-  move(x=torbreit-1.5, y=-1, z=torhoch/2)
-  difference() {
-  cylinder(torhoch-3.2, r=2, center=true);
-  cylinder(torhoch*2, r=.9, center = true);
+    for(querbrett = [torhoch/3, (torhoch/3)*2]) {
+      move(z=querbrett, y=-.3) cube([torbreit, 1, 2]);
+      for (nagel = [1:6])
+      move(z=querbrett+1, y=-.3, x=(nagel*2)+1) sphere(d=1);
+    }
   }
 }
 
