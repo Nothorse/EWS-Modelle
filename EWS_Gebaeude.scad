@@ -38,13 +38,15 @@ zinnen_durchgaenge = [];
 mauerwerk = true;
 // Strukturauswahl
 mauer_map = "mauer2.png"; //  ["mauer1.png":"Grob", "mauer2.png":"Mittel", "mauer3.png":"Fein", "mauer4.png":"Bögen"]
+// Gesimse und andere Mauerfeatures
+gesimse = 0; // [0:Kein Gesims,1:Rechtwinklig,2:Faschen]
 // Zinnenform
 zinnentyp = 1; // [1:Rechteck, 2:Schwalbenschwanz, 3:Bogen]
 // Fenstertyp
 fenster = "1"; // [1:"schmal", 2:"doppelbogen"]
-// Fenstertyp
+// Tortyp
 tortyp = "1"; // [1:"Drehangel", 2:"Offen"]
-// Fenstertyp
+// Torform
 torform = "1"; // [1:"8eck oben", 2:"Spitzbogen"]
 
 
@@ -110,12 +112,21 @@ module turm(turmtore, turmdurchgaenge, struktur, fenster) {
           }
         }
       }
-      if (struktur && mauer_map == "mauer4.png") {
+      if (gesimse == 1) {
         for (i = [1:6]) {
           if (!in_list(i, alle_durch))
           move(rz=i*60)
           move(x=-1,y=sideRad)
-          cube ([1,.3,hoehe-3]);
+          cube ([1,.5,hoehe-3]);
+          move(rz=i*60)
+          move(x=seite/2-1,y=sideRad)
+          cube ([1,.5,hoehe-3]);
+          move(rz=i*60)
+          move(x=-seite/2,y=sideRad)
+          cube ([1,.5,hoehe-3]);
+          move(rz=i*60)
+          move(x=0,y=sideRad+.2, z=(hoehe*2/3 + hoehe/6)-3)
+          cube ([seite,.5,hoehe/3],center=true);
         }
       }
     }
@@ -185,7 +196,7 @@ module _spitzbogen() {
       rotate([90,0,0]) {
         linear_extrude(6) {
           difference() {
-            move(y=-6) ellipse(torbreit, torbreit*2);
+            move(y=-4) ellipse(torbreit, torbreit*2);
             move(y=-torhoch-3) square(size=[torbreit, 5], center=true);
           }
           move(y=-10) square(size=[torbreit, torbreit], center=true);
@@ -227,9 +238,9 @@ module _schmalfenster() {
 
 module _doppelfenster() {
   $fn=20;
-  fensterbreit = seite/2 -3;
-  fensterhoch = hoehe/3 -5;
-  translate([(seite/2-5.5),5,((hoehe/4)*3)]) {
+  fensterbreit = seite/2 -5;
+  fensterhoch = hoehe/3 -7;
+  translate([(seite/2-5.5),5,((hoehe/4)*3)+1]) {
     union() {
       rotate([90,0,0]) {
         linear_extrude(6) {
@@ -239,7 +250,7 @@ module _doppelfenster() {
       }
     }
   }
-  translate([-(seite/2-4.5),5,((hoehe/4)*3)]) {
+  translate([-(seite/2-4.5),5,((hoehe/4)*3)+1]) {
     union() {
       rotate([90,0,0]) {
         linear_extrude(6) {
@@ -297,7 +308,7 @@ module _zinnen(typ) {
             move(x=-(zinVers)*2,y=4) _schwalbenschwanz();
           }
           if (typ == 3) {
-            move(rx=90,y=4, z=4) linear_extrude(3) ellipse(seite+4, 8);
+            move(rx=90,y=4, z=6) linear_extrude(4) ellipse(seite+4, 8);
           }
         }
       }
