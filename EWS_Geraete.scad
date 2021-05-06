@@ -14,7 +14,9 @@ module wallmove(x=0, y=0, z=0, richtung=0) {
   rotate([0,0,richtung*60]) translate([x,y,z]) children();
 }
 
-/* module kistenkroete() {
+kistenkroete();
+
+module kistenkroete() {
   difference() {
     union() {
       difference() {
@@ -49,7 +51,7 @@ module wallmove(x=0, y=0, z=0, richtung=0) {
     wallmove(y=sideRad-1, x=-seite/2-1, z=-1, richtung=2) cube([seite+4,3,hoehe+2]);
     wallmove(y=sideRad-1, x=-seite/2-1, z=-1, richtung=5) cube([seite+4,3,hoehe+2]);
   }
-} */
+}
 
 module schildkroete() {
   schief = rands(min=-3,max=3,value_count=60);
@@ -117,9 +119,6 @@ module bretterschlitze(menge, schief, windrichtung) {
   }
 
 }
-
-bete();
-//nagelbalken(40,0);
 
 
 module nagelbalken(laenge, winkel) {
