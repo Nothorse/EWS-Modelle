@@ -1,19 +1,23 @@
 use <MCAD/regular_shapes.scad>
-//$fn=50;
-seite = 18.5;
-basishoehe = 50;
-hoehe = 50-3;
+use <commonfunctions.scad>
+/**
+ * Geräte für EWS
+ * TH (T!osh) <th@grendel.at>
+ * remix erwünscht
+ * module mit _name sind privat
+ */
+
+ // Setup für Customizer
+ /* [Maße] */
+ // Höhe in mm
+ basishoehe = 50;
+ // Seitenbreite
+ seite = 18.5;
+
 
 sideRad = seite * sqrt(3)/2;
 
-
-module move(x=0,y=0,z=0,rx=0,ry=0,rz=0)
-{ translate([x,y,z])rotate([rx,ry,rz]) children(); }
-
-module wallmove(x=0, y=0, z=0, richtung=0) {
-  rotate([0,0,richtung*60]) translate([x,y,z]) children();
-}
-
+hoehe = 50-3;
 kistenkroete();
 
 module kistenkroete() {

@@ -1,6 +1,7 @@
 use <MCAD/regular_shapes.scad>
 use <lib/math.scad>
 use <lib/transforms.scad>
+use <commonfunctions.scad>
 /**
  * Gebäude für EWS
  * TH (T!osh) <th@grendel.at>
@@ -54,13 +55,6 @@ torform = 1; // [1:"8eck oben", 2:"Spitzbogen"]
 
 sideRad = seite * sqrt(3)/2;
 
-
-module move(x=0,y=0,z=0,rx=0,ry=0,rz=0)
-{ translate([x,y,z])rotate([rx,ry,rz]) children(); }
-
-module wallmove(x=0, y=0, z=0, richtung=0) {
-  rotate([0,0,richtung*60]) translate([x,y,z]) children();
-}
 
 function flatten(l) = [ for (a = l) for (b = a) b ];
 
