@@ -5,6 +5,13 @@
  * module mit _name sind privat
  */
 
+// Module: _bretterwaende
+//
+//   Bretterwand mit konfigurierbar schiefen Brettern
+// Arguments:
+//   seiten = [1,2,...] welche seiten haben wände
+//   schief = [] Array aus Winkelabweichnungen
+//
 module _bretterwaende(seiten, schief) {
   difference() {
     color("#86592d") union() {
@@ -21,6 +28,13 @@ module _bretterwaende(seiten, schief) {
   }
 }
 
+// Module: _querbalken
+//
+//   Horizontaler Balken mit Nägeln
+// Arguments:
+//   schief = Winkelabweichung
+//   windrichtung = Gebäudeseite für Balken
+//
 module _querbalken(schief, windrichtung) {
   wallmove(y = sideRad - 1, x = -gseite / 2, z = hoehe - 4.5,
            richtung = windrichtung) nagelbalken(gseite, -1);
@@ -34,6 +48,14 @@ module _querbalken(schief, windrichtung) {
       nagelbalken(gseite, 0);
 }
 
+// Module: bretterschlitze
+//
+//   Differenzmodul für Spalten zwischen den Brettern.
+// Arguments:
+//   menge = anzahl der bretterfugen
+//   schief = winkelabweichung
+//   windrichtung = Seite
+//
 module bretterschlitze(menge, schief, windrichtung) {
   for (j = menge) {
     wallmove(y = sideRad - 1.5, x = (gseite / 2) - gseite / 5 * j, z = 0,
@@ -42,6 +64,13 @@ module bretterschlitze(menge, schief, windrichtung) {
   }
 }
 
+// Module: nagelbalken
+//
+//   Balken mit Nägeln
+// Arguments:
+//   laenge = länge des Balkens
+//   winkel = y winkel
+//
 module nagelbalken(laenge, winkel) {
   nagelzahl = floor(laenge / 4);
   nagelabstand = laenge / (nagelzahl);

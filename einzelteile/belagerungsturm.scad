@@ -5,6 +5,11 @@
  * module mit _name sind privat
  */
 use <geraetebasis.scad>
+
+// Module: bete (BT)
+//
+//   Belagerungsturm
+//
 module bete() {
   schief = rands(min = -3, max = 3, value_count = 60);
   difference() {

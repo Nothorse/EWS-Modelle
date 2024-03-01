@@ -5,6 +5,16 @@
  * module mit _name sind privat
  */
 
+// Module: turm
+//
+//   Kompletter Turm
+// Arguments:
+//   turmtore = Richtungen für Tore
+//   turmdurchgaenge = Richtungen für Durchgänge
+//   struktur = Struktur für Mauerwerk
+//   fenster = Form der Fenster [1:"schmal", 2:"doppelbogen"]
+//   torform = Form des Tores [1:"8eck oben", 2:"Spitzbogen"]
+//
 module turm(turmtore, turmdurchgaenge, struktur, fenster, torform) {
   alle_durch = flatten([ turmdurchgaenge, turmtore ]);
   difference() {
@@ -56,18 +66,36 @@ module turm(turmtore, turmdurchgaenge, struktur, fenster, torform) {
   }
 }
 
-module bergfried(durchgaenge, struktur) {
-  turm([], durchgaenge, struktur);
+// Module: bergfried
+//
+//   Oberes Stockwerk eines Bergfrieds
+// Arguments:
+//   durchgaenge = Richtungen für Durchgänge
+//   struktur = Struktur für Mauerwerk
+//   fenster = Form der Fenster [1:"schmal", 2:"doppelbogen"]
+//
+module bergfried(durchgaenge, struktur, fenster) {
+  turm([], durchgaenge, struktur, fenster);
   move(0, 0, -2.5) hexagon_prism(3, seite - 1.2);
 }
 
 // Teilmodule
 
+// Module: _mauerstruktur
+//
+//   Struktur für Mauerwerk
+//
 module _mauerstruktur() {
   scale([ seite / 72, (hoehe - 2) / 108, 0.9 / 256 ])
       surface(file = mauer_map, convexity = 3);
 }
 
+// Module: _fenster
+//
+//   Differenzmodul für Fenster
+// Arguments:
+//   fenstertyp = Form der Fenster [1:"schmal", 2:"doppelbogen"]
+//
 module _fenster(fenstertyp) {
   echo(fenstertyp);
   if (fenstertyp == 1) {
@@ -78,6 +106,10 @@ module _fenster(fenstertyp) {
   }
 }
 
+// Module: _schmalfenster
+//
+//   Differenzmodul für schmale Fenster
+//
 module _schmalfenster() {
   $fn = 8;
   fensterbreit = seite / 5;
@@ -97,6 +129,10 @@ module _schmalfenster() {
   }
 }
 
+// Module: _doppelfenster
+//
+//   Differenzmodul für Doppelbogenfenster
+//
 module _doppelfenster() {
   $fn = 20;
   fensterbreit = seite / 2 - 5;
@@ -125,6 +161,11 @@ module _doppelfenster() {
   }
 }
 
+// Module: _toroeffnung
+//
+//   Differenzmodul für Toröffnung
+//   @todo add params, remove global
+//
 module _toroeffnung() {
   if (torform == 1) {
     _torachteck();
@@ -134,6 +175,10 @@ module _toroeffnung() {
   }
 }
 
+// Module: _torachteck
+//
+//   Toröffnung mit achteckigem Abschluss
+//
 module _torachteck() {
   torbreit = seite - seite / 5;
   torhoch = hoehe / 3 - (hoehe / 30);
@@ -147,7 +192,10 @@ module _torachteck() {
     }
   }
 }
-
+// Module: _spitzbogen
+//
+//   Toröffnung mit Spitzbogen Abschluss
+//
 module _spitzbogen() {
   torhoch = hoehe / 3 - (hoehe / 30);
   translate([ -.5, 5, torhoch + 3 ]) {
@@ -159,6 +207,13 @@ module _spitzbogen() {
   }
 }
 
+// Module: _toroeffnung2d
+//
+//   Modul für Fasche um das Tor
+// Arguments:
+//   type = tortyp
+//   woher = richtung
+//
 module _toroeffnung2d(type, woher) {
   echo("fasche1", woher, type);
   if (type == 1) {
@@ -180,4 +235,28 @@ module _toroeffnung2d(type, woher) {
     }
     move(y = -10) square(size = [ torbreit, torbreit ], center = true);
   }
+}
+
+// Module: solomauer
+//
+//   Einezlne Mauer
+// Arguments:
+//   struktur = Mauerwerkstruktur.
+//
+module solomauer(struktur) {
+  intersection() {
+    difference() {
+      union() {
+        cube([ seite, 1, hoehe ]);
+        if (struktur) {
+          move(x = 0, y = -0.1, rx = 90) { _mauerstruktur(); }
+        }
+        cube([ seite, sideRad - 5, 2 ]);
+      }
+      move(z = 7, x = seite / 2) _fenster();
+      move(x = -1, y = -2, z = hoehe - 3.6) cube([ seite + 5, 4, 4 ]);
+    }
+    move(y = 4, x = seite / 2) triangle_prism(hoehe + 10, seite / 3 * 2);
+  }
+  move(y = -1, x = 1) cube([ seite - 2, 1, 1 ]);
 }

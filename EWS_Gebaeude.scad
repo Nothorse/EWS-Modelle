@@ -3,7 +3,7 @@ include <einzelteile/turm.scad>
 include <einzelteile/zinnenkranz.scad>
 include <ewsbase.scad>
 /**
- * Gebäude für EWS
+ * Kontrolldatei für alle EWS-Gebäude
  * TH (T!osh) <th@grendel.at>
  * remix erwünscht
  * module mit _name sind privat
@@ -84,22 +84,4 @@ if (tor_zeigen) {
 
 if (Mauer_zeigen) {
   move(y = sideRad * 3) solomauer(mauerwerk);
-}
-
-module solomauer(struktur) {
-  intersection() {
-    difference() {
-      union() {
-        cube([ seite, 1, hoehe ]);
-        if (struktur) {
-          move(x = 0, y = -0.1, rx = 90) { _mauerstruktur(); }
-        }
-        cube([ seite, sideRad - 5, 2 ]);
-      }
-      move(z = 7, x = seite / 2) _fenster();
-      move(x = -1, y = -2, z = hoehe - 3.6) cube([ seite + 5, 4, 4 ]);
-    }
-    move(y = 4, x = seite / 2) triangle_prism(hoehe + 10, seite / 3 * 2);
-  }
-  move(y = -1, x = 1) cube([ seite - 2, 1, 1 ]);
 }

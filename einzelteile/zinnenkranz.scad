@@ -1,3 +1,18 @@
+/**
+ * Zinnenkranz für Türme und Bergfriede
+ * TH (T!osh) <th@grendel.at>
+ * remix erwünscht
+ * module mit _name sind privat
+ */
+
+// Module: zinnenkranz
+//
+//   Zinnenkranz für Turm
+// Arguments:
+//
+//   durchbrueche = z.B. [1,3] Ausgesparte Seiten um zwei Türme passgenau aneinanderzufügen
+//   typ = Zinnentyp [1:Rechteck, 2:Schwalbenschwanz, 3:Bogen]
+//   
 module zinnenkranz(durchbrueche, typ) {
   move(0, 0, -1) {
     difference() {
@@ -17,6 +32,11 @@ module zinnenkranz(durchbrueche, typ) {
   }
 }
 
+// Module: _zinnen
+//
+//   ${2:description
+// Arguments:
+//   typ = Zinnentyp [1:Rechteck, 2:Schwalbenschwanz, 3:Bogen]
 module _zinnen(typ) {
   zinB = seite / 8;
   zinVers = seite / 6 * 1.8;
@@ -43,6 +63,10 @@ module _zinnen(typ) {
   }
 }
 
+// Module: _schwalbenschwanz
+//
+//   differenzmodule für Schwalbenschwanzzinnen
+//
 module _schwalbenschwanz() {
   $fn = 20;
   move(z = 3, rx = 90) linear_extrude(4) {

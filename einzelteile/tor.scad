@@ -1,5 +1,16 @@
+/**
+ * Tor als separates Teil.
+ * TH (T!osh) <th@grendel.at>
+ * remix erwünscht
+ * module mit _name sind privat
+ */
 
-
+// Module: tor
+//
+//   Tor in verschiedenen Formen
+// Arguments:
+//   tortype = Typ [1:"Drehangel", 2:"Offen"]
+//
 module tor(tortyp) {
   $fn = 20;
   torbreit = seite - 1;
@@ -24,6 +35,13 @@ module tor(tortyp) {
   }
 }
 
+// Module: _torkorpus
+//
+//   Tor an sich
+// Arguments:
+//   torbreit = Breite in mm
+//   torhoch  = Höhe in mm
+//
 module _torkorpus(torbreit, torhoch) {
   union() {
     difference() {
@@ -40,6 +58,10 @@ module _torkorpus(torbreit, torhoch) {
   }
 }
 
+// Module: _drehtorangeln
+//
+//   Angeln um das Tor beweglich zu montieren
+//
 module _drehtorangeln() {
   $fn = 30;
   torbreit = seite - 1;
@@ -57,6 +79,10 @@ module _drehtorangeln() {
   }
 }
 
+// Module: drehtordorn
+//
+//   Dorn für bewegliches Tor
+//
 module drehtordorn() {
   move(rx = -90, z = 1, y = -1) union() {
     cylinder(d = 1.2, 33);

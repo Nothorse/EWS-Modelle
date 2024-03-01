@@ -7,6 +7,10 @@
  */
 use <geraetebasis.scad>
 
+// Module: kistenkroete
+//
+//   Schildkröte aus zusammengezimmerten Kisten
+//
 module kistenkroete() {
   difference() {
     union() {
