@@ -14,9 +14,13 @@
 //   struktur = Struktur für Mauerwerk
 //   fenster = Form der Fenster [1:"schmal", 2:"doppelbogen"]
 //   torform = Form des Tores [1:"8eck oben", 2:"Spitzbogen"]
+//   seite = Seitenlänge
+//   hoehe = Höhe des Turms
 //
-module turm(turmtore, turmdurchgaenge, struktur, fenster, torform) {
+module turm(turmtore, turmdurchgaenge, struktur, fenster, torform, seite = 18.5,
+            hoehe = 50) {
   alle_durch = flatten([ turmdurchgaenge, turmtore ]);
+  sideRad = hexradius(seite);
   difference() {
     // turmkörper
     union() {

@@ -1,4 +1,6 @@
+use <BOSL/constants.scad>
 use <BOSL/math.scad>
+use <BOSL/shapes.scad>
 use <BOSL/transforms.scad>
 use <MCAD/regular_shapes.scad>
 use <commonfunctions.scad>
@@ -34,7 +36,7 @@ zinnen_durchgaenge = [];
 mauerwerk = true;
 // Strukturauswahl
 mauer_map = "mauer2.png"; //  ["mauer1.png":"Grob", "mauer2.png":"Mittel",
-                          //  "mauer3.png":"Fein", "mauer4.png":"Bögen"]
+//  "mauer3.png":"Fein", "mauer4.png":"Bögen"]
 // Gesimse und andere Mauerfeatures
 gesimse = 0; // [0:Kein Gesims,1:Rechtwinklig,2:Faschen]
 // Zinnenform

@@ -10,7 +10,8 @@ use <geraetebasis.scad>
 //
 //   Belagerungsturm
 //
-module bete() {
+module bete(gseite = 18.5) {
+  
   schief = rands(min = -3, max = 3, value_count = 60);
   difference() {
     _bretterwaende([ 1, 3, 4, 5, 6 ], schief);

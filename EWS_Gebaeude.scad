@@ -54,14 +54,7 @@ torform = 1; // [1:"8eck oben", 2:"Spitzbogen"]
 
 // Berechnete größen
 
-sideRad = seite * sqrt(3) / 2;
-
-function flatten(l) = [for (a = l) for (b = a) b];
-
-function intersect(l) = [for (c = l) for (d = c) d];
-
-x = intersect([ [1:2], [ 1, 3 ] ]);
-echo(x);
+sideRad = hexradius(seite);
 
 if (zinnen_zeigen) {
   move(z = 1) zinnenkranz(zinnen_durchgaenge, zinnentyp);
