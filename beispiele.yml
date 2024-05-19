@@ -1,0 +1,46 @@
+---
+- name: Turm M1
+  stl: turm-m1.stl
+  png: turm-m1.png
+  text: Turm mit einem Tor. Struktur mauer1.png
+  scad: EWS_Gebaeude.scad
+- name: Turm M2
+  stl: turm-m2.stl
+  png: turm-m2.png
+  text: Turm mit einem Tor. Struktur mauer2.png
+  scad: EWS_Gebaeude.scad
+- name: Turm M3
+  stl: turm-m3.stl
+  png: turm-m3.png
+  text: Turm mit einem Tor. Struktur mauer3.png
+  scad: EWS_Gebaeude.scad
+- name: Turm M4
+  stl: turm-m4.stl
+  png: turm-m4.png
+  text: Turm mit einem Tor. Struktur mauer4.png
+  scad: EWS_Gebaeude.scad
+- name: Zinnen 1
+  stl: zinnen-1.stl
+  png: zinnen-1.png
+  text: Zinnenkranz rechteckige Zinnen
+  scad: EWS_Gebaeude.scad
+- name: Zinnen 2
+  stl: zinnen-2.stl
+  png: zinnen-2.png
+  text: Zinnenkranz Schwalbenschwanz Zinnen
+  scad: EWS_Gebaeude.scad
+- name: Zinnen 3
+  stl: zinnen-3.stl
+  png: zinnen-3.png
+  text: Zinnenkranz geschwungene Zinnen
+  scad: EWS_Gebaeude.scad
+- name: Tor 1
+  stl: tor-3.stl
+  png: tor-3.png
+  text: Torform 1
+  scad: EWS_Gebaeude.scad
+- name: Tor 2
+  stl: tor-2.stl
+  png: tor-2.png
+  text: Torform 2
+  scad: EWS_Gebaeude.scad

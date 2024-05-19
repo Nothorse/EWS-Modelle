@@ -7,7 +7,7 @@ use <BOSL/constants.scad>;
 module halbschiff(seite = 18.5, reling = 15, rumpfhoehe = 10) {
   union() {
     color("#996633") _rumpf_mit_struktur(seite, rumpfhoehe);
-    rotate([ 0, 0, 90 ]) translate([ 0, 0, rumpfhoehe + .4 ])
+    rotate([ 0, 0, 90 ]) translate([ 0, 0, rumpfhoehe + .01 ])
         _deckplanken_struktur(seite = 18.5);
     translate([ 0, 0, rumpfhoehe ])
         _reling_mit_struktur(seite = seite, reling = reling, dicke = 1);

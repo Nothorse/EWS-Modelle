@@ -17,18 +17,18 @@ hoehe = 50;
 seite = 18.5;
 /* [Gebäudeauswahl] */
 // Turm
-turm_zeigen = true;
+turm_zeigen = false;
 // Bergfried oberer Turmteil
-bergfried_zeigen = true;
+bergfried_zeigen = false;
 // Tor mit Dorn
-tor_zeigen = true;
+tor_zeigen = false;
 // Zinnenkranz
-zinnen_zeigen = true;
+zinnen_zeigen = false;
 // Einzelmauer
-Mauer_zeigen = true;
+Mauer_zeigen = false;
 /* [Tore und Durchgänge] */
 // Tore für Turm (Erdgeschoss BF) (Windrichtungen) z.B. [1]
-tore = [];
+tore = [1];
 // Durchgänge im Erdgeschoß (Windrichtungen)
 durchgaenge = [];
 // Durchgänge im Obergeschoß eines Bergfrieds (Windrichtungen)  z.B. [3,5]

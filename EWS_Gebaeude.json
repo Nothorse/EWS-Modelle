@@ -1,0 +1,22 @@
+{
+    "fileFormatVersion": "1",
+    "parameterSets": {
+        "Neue Parameter Liste1": {
+            "Mauer_zeigen": "false",
+            "bergfried_zeigen": "false",
+            "fenster": "2",
+            "gesimse": "0",
+            "hoehe": "50",
+            "mauer_map": "./mauer2.png",
+            "mauerwerk": "true",
+            "seite": "18.5",
+            "tor_zeigen": "false",
+            "tore": "[3]",
+            "torform": "1",
+            "tortyp": "1",
+            "turm_zeigen": "true",
+            "zinnen_zeigen": "true",
+            "zinnentyp": "1"
+        }
+    }
+}

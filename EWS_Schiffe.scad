@@ -41,10 +41,10 @@ module langschiff(seite = 18.5, reling = 15) {
   mz = seite * .75 + 10 + (reling / 2);
   difference() {
     schiffsbasis(seite, reling);
-    translate([ mx, my, mz ]) rotate([90]) #linear_extrude(60) scale([ 1, .75 ])
+    translate([ mx, my, mz ]) rotate([90]) linear_extrude(60) scale([ 1, .75 ])
         hull() {
       circle(seite);
-      translate([ hexradius(seite), 0, 0 ]) #circle(seite);
+      translate([ hexradius(seite), 0, 0 ]) circle(seite);
     }
   }
 }

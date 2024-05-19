@@ -90,8 +90,9 @@ module bergfried(durchgaenge, struktur, fenster) {
 //   Struktur für Mauerwerk
 //
 module _mauerstruktur() {
+  mapfile = str("strukturen/", mauer_map);
   scale([ seite / 72, (hoehe - 2) / 108, 0.9 / 256 ])
-      surface(file = mauer_map, convexity = 3);
+      surface(file = mapfile, convexity = 3);
 }
 
 // Module: _fenster
@@ -101,7 +102,6 @@ module _mauerstruktur() {
 //   fenstertyp = Form der Fenster [1:"schmal", 2:"doppelbogen"]
 //
 module _fenster(fenstertyp) {
-  echo(fenstertyp);
   if (fenstertyp == 1) {
     _schmalfenster();
   }

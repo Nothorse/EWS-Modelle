@@ -1,0 +1,59 @@
+{
+    "parameterSets":
+    {
+        "Turm M1": {
+            "turm_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "mauer_map": "mauer1.png"
+        },
+        "Turm M2": {
+            "turm_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "mauer_map": "mauer2.png"
+        },
+        "Turm M3": {
+            "turm_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "mauer_map": "mauer3.png"
+        },
+        "Turm M4": {
+            "turm_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "mauer_map": "mauer4.png"
+        },
+        "Zinnen 1": {
+            "zinnen_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "zinnentyp": "1"
+        },
+        "Zinnen 2": {
+            "zinnen_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "zinnentyp": "2"
+        },
+        "Zinnen 3": {
+            "zinnen_zeigen": true,
+            "tore": "[3]",
+            "fenster": "2",
+            "zinnentyp": "3"
+        },
+        "Tor 1": {
+            "tor_zeigen": true,
+            "torform": "1",
+            "zinnentyp": "3"
+        },
+        "Tor 2": {
+            "tor_zeigen": true,
+            "torform": "2",
+            "zinnentyp": "3"
+        }
+
+    },
+    "fileFormatVersion": "1"
+}
