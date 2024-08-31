@@ -254,6 +254,7 @@ module solomauer(struktur) {
         cube([ seite, 1, hoehe ]);
         if (struktur) {
           move(x = 0, y = -0.1, rx = 90) { _mauerstruktur(); }
+          move(x = seite, y = 0.9, rx = 90, rz=180) { _mauerstruktur(); }
         }
         cube([ seite, sideRad - 5, 2 ]);
       }
@@ -262,5 +263,5 @@ module solomauer(struktur) {
     }
     move(y = 4, x = seite / 2) triangle_prism(hoehe + 10, seite / 3 * 2);
   }
-  move(y = -1, x = 1) cube([ seite - 2, 1, 1 ]);
+  #move(y = -3, x = 2) cube([ seite - 4, 3, 1 ]);
 }

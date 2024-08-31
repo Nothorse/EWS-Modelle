@@ -7,7 +7,7 @@
             "fenster": "2",
             "gesimse": "0",
             "hoehe": "50",
-            "mauer_map": "./mauer2.png",
+            "mauer_map": ".\/mauer2.png",
             "mauerwerk": "true",
             "seite": "18.5",
             "tor_zeigen": "false",
@@ -17,6 +17,23 @@
             "turm_zeigen": "true",
             "zinnen_zeigen": "true",
             "zinnentyp": "1"
+        },
+        "Neue Parameter Liste2": {
+            "Mauer_zeigen": "false",
+            "bergfried_zeigen": "true",
+            "fenster": "2",
+            "gesimse": "1",
+            "hoehe": "50",
+            "mauer_map": "mauer3.png",
+            "mauerwerk": "true",
+            "seite": "18.5",
+            "tor_zeigen": "false",
+            "tore": "[1]",
+            "torform": "2",
+            "tortyp": "1",
+            "turm_zeigen": "false",
+            "zinnen_zeigen": "false",
+            "zinnentyp": "2"
         }
     }
 }

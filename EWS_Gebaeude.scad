@@ -66,7 +66,7 @@ if (turm_zeigen) {
 
 if (bergfried_zeigen) {
   move(x = sideRad * 3, y = sideRad * 3, z = 2)
-      bergfried(bf_durchgaenge, mauerwerk);
+      bergfried(bf_durchgaenge, mauerwerk, fenster);
 }
 
 if (tor_zeigen) {

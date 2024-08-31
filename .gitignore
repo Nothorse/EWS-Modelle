@@ -2,6 +2,6 @@
 #ignore gcode and binary files
 *.gcode
 *.3mf
-*.stl
+/*.stl
 *.vscode
 localtests.scad

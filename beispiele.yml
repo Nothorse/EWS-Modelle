@@ -44,3 +44,58 @@
   png: tor-2.png
   text: Torform 2
   scad: EWS_Gebaeude.scad
+- name: Bergfried 1
+  stl: bergfried-1.stl
+  png: bergfried-1.png
+  text: Bergfried Oberes Geschoß, Struktur mauer1.png
+  scad: EWS_Gebaeude.scad
+- name: Bergfried 2
+  stl: bergfried-2.stl
+  png: bergfried-2.png
+  text: Bergfried Oberes Geschoß, Struktur mauer2.png
+  scad: EWS_Gebaeude.scad
+- name: Bergfried 3
+  stl: bergfried-3.stl
+  png: bergfried-3.png
+  text: Bergfried Oberes Geschoß, Struktur mauer3.png
+  scad: EWS_Gebaeude.scad
+- name: Mauer 1
+  stl: mauer1.stl
+  png: mauer1.png
+  text: Mauer 1
+  scad: EWS_Gebaeude.scad
+- name: Mauer 2
+  stl: mauer2.stl
+  png: mauer2.png
+  text: Mauer 2
+  scad: EWS_Gebaeude.scad
+- name: Mauer 3
+  stl: mauer3.stl
+  png: mauer3.png
+  text: Mauer 3
+  scad: EWS_Gebaeude.scad
+- name: Langschiff
+  stl: langschiff.stl
+  png: langschiff.png
+  text: Langschiff mit Loch für Mast
+  scad: EWS_Schiffe.scad
+- name: Segel
+  stl: segel.stl
+  png: segel.png
+  text: Mast mit Segel
+  scad: EWS_Schiffe.scad
+- name: Belagerungsturm
+  stl: belagerungsturm.stl
+  png: belagerungsturm.png
+  text: Belagerungsturm
+  scad: EWS_Geraete.scad
+- name: Schildkröte
+  stl: schildkroete.stl
+  png: schildkroete.png
+  text: Schildkröte
+  scad: EWS_Geraete.scad
+- name: Onager
+  stl: onager.stl
+  png: onager.png
+  text: Onager
+  scad: EWS_Geraete.scad

@@ -52,6 +52,48 @@
             "tor_zeigen": true,
             "torform": "2",
             "zinnentyp": "3"
+        },
+        "Bergfried 1": {
+            "bergfried_zeigen": true,
+             "fenster": "2",
+            "mauer_map": "mauer1.png"           
+        },
+        "Bergfried 2": {
+            "bergfried_zeigen": true,
+             "fenster": "2",
+            "mauer_map": "mauer2.png"
+        },
+        "Bergfried 3": {
+            "bergfried_zeigen": true,
+             "fenster": "2",
+            "mauer_map": "mauer3.png"           
+        },
+        "Mauer 1": {
+            "Mauer_zeigen": true,
+            "mauer_map": "mauer3.png"           
+        },
+        "Mauer 2": {
+            "Mauer_zeigen": true,
+            "mauer_map": "mauer2.png"           
+        },
+        "Mauer 3": {
+            "Mauer_zeigen": true,
+            "mauer_map": "mauer3.png"           
+        },
+        "Langschiff": {
+            "langschiff_zeigen": true
+        },
+        "Segel": {
+            "segel_zeigen": true
+        },
+        "Belagerungsturm": {
+            "bete_zeigen": true
+        },
+        "Schildkröte": {
+            "kistenkroete_zeigen": true
+        },
+        "Onager": {
+            "onager_zeigen": true
         }
 
     },

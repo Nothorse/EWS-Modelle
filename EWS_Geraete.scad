@@ -1,7 +1,9 @@
 include <einzelteile/belagerungsturm.scad>
 include <einzelteile/geraetebasis.scad>
 include <einzelteile/kistenkroete.scad>
+include <einzelteile/onager.scad>
 include <einzelteile/schildkroete.scad>
+
 include <ewsbase.scad>
 /**
  * remix erwünscht
@@ -15,11 +17,13 @@ basishoehe = 50;
 seite = 18.5;
 /* [Modelle] */
 // Einfache Schildkröte
-schildkroete_zeigen = true;
+schildkroete_zeigen = false;
 // Gezimmerte Schildkröte
-kistenkroete_zeigen = true;
+kistenkroete_zeigen = false;
 // Belagerungsturm
-bete_zeigen = true;
+bete_zeigen = false;
+// Onager
+onager_zeigen = false;
 
 // Für Geräte 1mm kleinere Seiten.
 gseite = seite - 1;
@@ -38,4 +42,8 @@ if (kistenkroete_zeigen) {
 
 if (bete_zeigen) {
   xmove(80) bete();
+}
+
+if (onager_zeigen) {
+  xmove(100) trebuchet();
 }

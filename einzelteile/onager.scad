@@ -17,7 +17,6 @@ use <commonfunctions.scad>
 
 
 $fn=50;
-trebuchet();
 
 module trebuchet() {
 	cube([2,laenge,1.5]);
